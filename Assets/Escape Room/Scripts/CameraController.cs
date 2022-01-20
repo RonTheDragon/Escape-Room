@@ -115,6 +115,7 @@ public class StartPosition : Location
     {
         Debug.Log("Standing in Start Looking Forward");
         MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        MapManagement.Player.transform.position = new Vector3(0, 0, -10);
     }
 
     public override bool TurnRight(bool Move)
@@ -141,7 +142,7 @@ public class StartPosition : Location
         {
             if (Move)
             {
-                CameraController.currentLocation.Current = new Exit();
+                CameraController.currentLocation.Current = new Position2Forward();
             }
             return true;
         }
@@ -245,17 +246,50 @@ public class StartBack : Location
         return false;
     }
 }
-public class Exit : Location
+public class Position2Forward : Location
 {
-    public Exit()
+    public Position2Forward()
     {
-        Debug.Log("You Escaped!");
-        MapManagement.Player.transform.position += Camera.main.transform.forward * 6;
+        Debug.Log("You Escaped!");        
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        MapManagement.Player.transform.position = new Vector3(0, 0, 0);
     }
 
     public override bool TurnRight(bool Move)
     {
         return false;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if(Move)
+        {
+            CameraController.currentLocation.Current = new Position2Left();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        return false;
+    }
+}
+
+public class Position2Left : Location
+{
+    public Position2Left()
+    {       
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, -90, 0);
+        MapManagement.Player.transform.position = new Vector3(0, 0, 0);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Forward();
+        }
+        return true;
     }
 
     public override bool TurnLeft(bool Move)

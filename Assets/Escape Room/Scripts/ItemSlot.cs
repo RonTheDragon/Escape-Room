@@ -24,7 +24,7 @@ public class ItemSlot : MonoBehaviour , IDropHandler
                     else
                     {
                         DD.InSlot.GetComponent<ItemSlot>().HeldItem = HeldItem; //makes the Item Original slot be filled with my old item
-                        HeldItem.GetComponent<DragDrop>().InSlot = DD.InSlot.GetComponent<RectTransform>();
+                        HeldItem.GetComponent<DragDrop>().InSlot = DD.InSlot.GetComponent<RectTransform>(); // makes my old item replace owner 
                         HeldItem.GetComponent<RectTransform>().anchoredPosition = DD.InSlot.GetComponent<RectTransform>().anchoredPosition;
                     }
                 }
