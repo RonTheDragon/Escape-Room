@@ -26,7 +26,7 @@ public class Door : Intractable
         {
             Debug.Log("The Door Is Already Opened");
         }
-        else if (IS.CheckIfInInventory("Key"))
+        else if (IS.CheckIfUsing("Key"))
         {
             open = true;
             Debug.Log("Door Opened");

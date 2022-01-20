@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         { // if left button pressed...
             Ray ray = TheCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

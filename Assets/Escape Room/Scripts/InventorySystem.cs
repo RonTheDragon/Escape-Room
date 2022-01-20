@@ -5,6 +5,7 @@ using UnityEngine;
 public class InventorySystem : MonoBehaviour
 {
     public ItemSlot[] InventorySlots;
+    public string Using;
     public GameObject AnItem;
     // Start is called before the first frame update
     void Start()
@@ -69,6 +70,12 @@ public class InventorySystem : MonoBehaviour
         }
         Debug.Log("You Dont Have The Correct Item To Use This");
         return false;
+    }
+
+    public bool CheckIfUsing(string Name)
+    {
+        if (Name == Using) return true;
+        else return false;
     }
 }
 public interface Item
