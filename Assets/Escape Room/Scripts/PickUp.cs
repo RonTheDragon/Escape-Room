@@ -6,13 +6,16 @@ public class PickUp : Intractable , Item
 {
     InventorySystem IS;
     public string TheName { get; set; }
+    public Sprite sprite { get; set; }
+
     public string Name = "Key";
+    public Sprite pic;
 
     // Start is called before the first frame update
     void Start()
     {
         IS = Camera.main.gameObject.GetComponent<InventorySystem>();
-
+        sprite = pic;
         if (Name == string.Empty)
             TheName = "Key";
         else TheName = Name;

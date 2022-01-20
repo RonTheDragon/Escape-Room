@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
 {
-    public List<Item> Items = new List<Item>();
+    public ItemSlot[] InventorySlots;
+    public GameObject AnItem;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,31 +20,51 @@ public class InventorySystem : MonoBehaviour
 
     public void AddToInventory(Item i)
     {
-        Items.Add(i);
+        foreach(ItemSlot s in InventorySlots)
+        {
+            if (s.HeldItem == null)
+            {
+                DragDrop dd = Instantiate(AnItem, s.transform.position, s.transform.rotation, s.transform.parent).GetComponent<DragDrop>();
+                dd.Name = i.TheName;
+                dd.InSlot = s.GetComponent<RectTransform>();
+                s.HeldItem = dd.GetComponent<RectTransform>();
+                dd.GetComponent<RectTransform>().anchoredPosition = s.GetComponent<RectTransform>().anchoredPosition;
+                break;
+            }
+        }
         Debug.Log($"{i.TheName} Was Added To The Inventory");
     }
 
     public void RemoveFromInventory(string Name)
     {
-        foreach (Item i in Items)
+        
+        foreach (ItemSlot s in InventorySlots)
         {
-            if (i.TheName == Name)
+            if (s.HeldItem != null)
             {
-                Debug.Log($"{i.TheName} Was Removed From The Inventory");
-                Items.Remove(i);
-                return;
+               if ( s.HeldItem.GetComponent<DragDrop>().Name==Name)
+                {
+                    Debug.Log($"{Name} Was Removed From The Inventory");
+                    Destroy(s.HeldItem.gameObject);
+                    s.HeldItem = null;
+                    return;
+                }
             }
-        }       
-        Debug.LogWarning($"{Name} Cant Be Found In Inventory");
+        }
+                Debug.LogWarning($"{Name} Cant Be Found In Inventory");
     }
 
     public bool CheckIfInInventory(string Name)
     {
-        foreach(Item i in Items)
+        
+        foreach (ItemSlot s in InventorySlots)
         {
-            if (i.TheName == Name)
+            if (s.HeldItem != null)
             {
-                return true;
+                if (s.HeldItem.GetComponent<DragDrop>().Name == Name)
+                {
+                    return true;
+                }
             }
         }
         Debug.Log("You Dont Have The Correct Item To Use This");
@@ -53,4 +74,5 @@ public class InventorySystem : MonoBehaviour
 public interface Item
 {
     string TheName { get; set; }
+    Sprite sprite { get; set; }
 }
