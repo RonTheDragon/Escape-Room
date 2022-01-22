@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler,IDragHandler ,IDropHandler
+public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
+    InventorySystem IS;
     Canvas canvas;
     RectTransform rectTransform;
     CanvasGroup canvasGroup;
@@ -17,6 +18,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = .6f;
+        IS.Using = Name;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -29,11 +31,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1;
         rectTransform.anchoredPosition = InSlot.anchoredPosition;
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        
+        StartCoroutine(RemoveFromUsing());
     }
 
     void Awake()
@@ -45,13 +43,13 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     void Start()
     {
         canvas = transform.parent.GetComponent<Canvas>();
-        
+        IS = Camera.main.gameObject.GetComponent<InventorySystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -63,5 +61,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
                 InSlot.GetComponent<ItemSlot>().OnDrop(eventData);
             }
         }
+    }
+
+    IEnumerator RemoveFromUsing()
+    {
+        yield return null; 
+        IS.Using = string.Empty;
     }
 }
