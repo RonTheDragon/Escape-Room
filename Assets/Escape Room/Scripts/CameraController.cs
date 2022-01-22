@@ -257,7 +257,11 @@ public class Position2Forward : Location
 
     public override bool TurnRight(bool Move)
     {
-        return false;
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Right();
+        }
+        return true;
     }
 
     public override bool TurnLeft(bool Move)
@@ -295,6 +299,34 @@ public class Position2Left : Location
     public override bool TurnLeft(bool Move)
     {
         return false;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        return false;
+    }
+}
+
+public class Position2Right : Location
+{
+    public Position2Right()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 90, 0);
+        MapManagement.Player.transform.position = new Vector3(0, 0, 0);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        return false;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Forward();
+        }
+        return true;
     }
 
     public override bool GoForward(bool Move)
