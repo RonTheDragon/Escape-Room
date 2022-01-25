@@ -159,6 +159,7 @@ public class StartRight : Location
     {
         Debug.Log("Standing in Start Looking Right");
         MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 90, 0);
+        MapManagement.Player.transform.position = new Vector3(0, 0, -10);
     }
 
     public override bool TurnRight(bool Move)
@@ -190,6 +191,7 @@ public class StartLeft : Location
     {
         Debug.Log("Standing in Start Looking Left");
         MapManagement.Player.transform.localRotation = Quaternion.Euler(0, -90, 0);
+        MapManagement.Player.transform.position = new Vector3(0, 0, -10);
     }
 
     public override bool TurnRight(bool Move)
@@ -221,6 +223,7 @@ public class StartBack : Location
     {
         Debug.Log("Standing in Start Looking at the back");
         MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        MapManagement.Player.transform.position = new Vector3(0, 0, -10);
     }
 
     public override bool TurnRight(bool Move)
@@ -275,7 +278,12 @@ public class Position2Forward : Location
 
     public override bool GoForward(bool Move)
     {
-        return false;
+        //delete THIS
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new SafeRoom();
+        }
+        return true;
     }
 }
 
@@ -298,7 +306,11 @@ public class Position2Left : Location
 
     public override bool TurnLeft(bool Move)
     {
-        return false;
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Back();
+        }
+        return true;
     }
 
     public override bool GoForward(bool Move)
@@ -317,11 +329,15 @@ public class Position2Right : Location
 
     public override bool TurnRight(bool Move)
     {
-        return false;
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Back();
+        }
+        return true;
     }
 
     public override bool TurnLeft(bool Move)
-    {
+    {  
         if (Move)
         {
             CameraController.currentLocation.Current = new Position2Forward();
@@ -335,3 +351,67 @@ public class Position2Right : Location
     }
 }
 
+public class Position2Back : Location
+{
+    public Position2Back()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        MapManagement.Player.transform.position = new Vector3(0, 0, 0);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Left();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Right();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new StartBack();
+        }
+        return true;
+    }
+}
+
+public class SafeRoom : Location
+{
+    public SafeRoom()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        MapManagement.Player.transform.position = new Vector3(-10, 0, 8);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        return false;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        return false;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        //DELETE THIS
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Forward();
+        }
+        return true;
+    }
+}
