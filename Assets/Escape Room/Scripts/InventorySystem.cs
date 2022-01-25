@@ -27,6 +27,7 @@ public class InventorySystem : MonoBehaviour
             {
                 DragDrop dd = Instantiate(AnItem, s.transform.position, s.transform.rotation, s.transform.parent).GetComponent<DragDrop>();
                 dd.Name = i.TheName;
+                dd.image.sprite = i.sprite;
                 dd.InSlot = s.GetComponent<RectTransform>();
                 s.HeldItem = dd.GetComponent<RectTransform>();
                 dd.GetComponent<RectTransform>().anchoredPosition = s.GetComponent<RectTransform>().anchoredPosition;

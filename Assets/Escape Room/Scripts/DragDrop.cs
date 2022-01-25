@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
     InventorySystem IS;
     Canvas canvas;
+    [HideInInspector]
+    public Image image;
     RectTransform rectTransform;
     CanvasGroup canvasGroup;
     [HideInInspector]
@@ -38,6 +41,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
+        image = GetComponent<Image>();
     }
     // Start is called before the first frame update
     void Start()
