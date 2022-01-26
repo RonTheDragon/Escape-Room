@@ -278,12 +278,7 @@ public class Position2Forward : Location
 
     public override bool GoForward(bool Move)
     {
-        //delete THIS
-        if (Move)
-        {
-            CameraController.currentLocation.Current = new SafeRoom();
-        }
-        return true;
+        return false;
     }
 }
 
@@ -315,7 +310,18 @@ public class Position2Left : Location
 
     public override bool GoForward(bool Move)
     {
-        return false;
+        if (MapManagement.LasersOff)
+        {
+            if (Move)
+            {
+                CameraController.currentLocation.Current = new Position4Forward();
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
@@ -347,7 +353,18 @@ public class Position2Right : Location
 
     public override bool GoForward(bool Move)
     {
-        return false;
+        if (MapManagement.SecondDoorOpen)
+        {
+            if (Move)
+            {
+                CameraController.currentLocation.Current = new Position3Forward();
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
@@ -387,9 +404,285 @@ public class Position2Back : Location
     }
 }
 
-public class SafeRoom : Location
+public class Position3Forward : Location
 {
-    public SafeRoom()
+    public Position3Forward()
+    {       
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 90, 0);
+        MapManagement.Player.transform.position = new Vector3(11, 0, 1);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position3Right();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if(Move)
+        {
+            CameraController.currentLocation.Current = new Position3Left();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+
+        return false;
+    }
+}
+
+public class Position3Left : Location
+{
+    public Position3Left()
+    {       
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        MapManagement.Player.transform.position = new Vector3(11, 0, 1);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position3Forward();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position3Back();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        return false;
+    }
+}
+
+public class Position3Right : Location
+{
+    public Position3Right()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        MapManagement.Player.transform.position = new Vector3(11, 0, 1);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position3Back();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {  
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position3Forward();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        return false;
+    }
+}
+
+public class Position3Back : Location
+{
+    public Position3Back()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, -90, 0);
+        MapManagement.Player.transform.position = new Vector3(11, 0, 1);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position3Left();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position3Right();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Left();
+        }
+        return true;
+    }
+}
+
+public class Position4Forward : Location
+{
+    public Position4Forward()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, -90, 0);
+        MapManagement.Player.transform.position = new Vector3(-10, 0, 0.1f);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position4Right();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position4Left();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        return false;
+    }
+}
+
+public class Position4Left : Location
+{
+    public Position4Left()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        MapManagement.Player.transform.position = new Vector3(-10, 0, 0.1f);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position4Forward();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position4Back();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        return false;
+    }
+}
+
+public class Position4Right : Location
+{
+    public Position4Right()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        MapManagement.Player.transform.position = new Vector3(-10, 0, 0.1f);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position4Back();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position4Forward();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        if (MapManagement.ThirdDoorOpen)
+        {
+            if (Move)
+            {
+                CameraController.currentLocation.Current = new Position5Forward();
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
+public class Position4Back : Location
+{
+    public Position4Back()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 90, 0);
+        MapManagement.Player.transform.position = new Vector3(-10, 0, 0.1f);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position4Left();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position4Right();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position2Right();
+        }
+        return true;
+    }
+}
+
+public class Position5Forward : Location
+{
+    public Position5Forward()
     {
         MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 0, 0);
         MapManagement.Player.transform.position = new Vector3(-10, 0, 8);
@@ -397,21 +690,154 @@ public class SafeRoom : Location
 
     public override bool TurnRight(bool Move)
     {
-        return false;
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position5Right();
+        }
+        return true;
     }
 
     public override bool TurnLeft(bool Move)
     {
-        return false;
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position5Left();
+        }
+        return true;
     }
 
     public override bool GoForward(bool Move)
     {
-        //DELETE THIS
+        return false;
+    }
+}
+
+public class Position5Left : Location
+{
+    public Position5Left()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, -90, 0);
+        MapManagement.Player.transform.position = new Vector3(-10, 0, 8);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
         if (Move)
         {
-            CameraController.currentLocation.Current = new Position2Forward();
+            CameraController.currentLocation.Current = new Position5Forward();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position5Back();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        return false;
+    }
+}
+
+public class Position5Right : Location
+{
+    public Position5Right()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 90, 0);
+        MapManagement.Player.transform.position = new Vector3(-10, 0, 8);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position5Back();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position5Forward();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        return false;
+    }
+}
+
+public class Position5Back : Location
+{
+    public Position5Back()
+    {
+        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        MapManagement.Player.transform.position = new Vector3(-10, 0, 8);
+    }
+
+    public override bool TurnRight(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position5Left();
+        }
+        return true;
+    }
+
+    public override bool TurnLeft(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position5Right();
+        }
+        return true;
+    }
+
+    public override bool GoForward(bool Move)
+    {
+        if (Move)
+        {
+            CameraController.currentLocation.Current = new Position4Left();
         }
         return true;
     }
 }
+
+
+//public class SafeRoom : Location
+//{
+//    public SafeRoom()
+//    {
+//        MapManagement.Player.transform.localRotation = Quaternion.Euler(0, 0, 0);
+//        MapManagement.Player.transform.position = new Vector3(-10, 0, 8);
+//    }
+
+//    public override bool TurnRight(bool Move)
+//    {
+//        return false;
+//    }
+
+//    public override bool TurnLeft(bool Move)
+//    {
+//        return false;
+//    }
+
+//    public override bool GoForward(bool Move)
+//    {
+//        //DELETE THIS
+//        if (Move)
+//        {
+//            CameraController.currentLocation.Current = new Position2Forward();
+//        }
+//        return true;
+//    }
+//}

@@ -60,7 +60,16 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         if (eventData.pointerDrag != null)
         {
-            if (InSlot != null)
+            if(Name == "Crowbar" && eventData.pointerDrag.GetComponent<DragDrop>().Name == "Hammer" 
+                || Name == "Hammer" && eventData.pointerDrag.GetComponent<DragDrop>().Name == "Crowbar")
+            {
+                DragDrop drag = eventData.pointerDrag.GetComponent<DragDrop>();
+                drag.InSlot.GetComponent<ItemSlot>().HeldItem = null;
+                Destroy(drag.gameObject);
+                Name = "CrowHammer";
+                image.sprite = Camera.main.GetComponent<InventorySystem>().ItemsSprites[0];
+            }
+            else if (InSlot != null)
             {
                 InSlot.GetComponent<ItemSlot>().OnDrop(eventData);
             }

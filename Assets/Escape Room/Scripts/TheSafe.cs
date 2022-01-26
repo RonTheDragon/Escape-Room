@@ -31,7 +31,7 @@ public class TheSafe : MonoBehaviour
     {
         if (!Open)
         {
-            N[slot] = (char)Num;
+            N[slot] = Num;
             slot++;
             if (slot > 3) CheckCode();           
             text.text = GetCode();

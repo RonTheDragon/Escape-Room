@@ -7,6 +7,7 @@ public class InventorySystem : MonoBehaviour
     public ItemSlot[] InventorySlots;
     public string Using;
     public GameObject AnItem;
+    public Sprite[] ItemsSprites;
     // Start is called before the first frame update
     void Start()
     {

@@ -7,6 +7,7 @@ public class Door : Intractable
     InventorySystem IS;
     bool open;
     Animator Anim;
+    public string OpenedBy;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,14 +27,21 @@ public class Door : Intractable
         {
             Debug.Log("The Door Is Already Opened");
         }
-        else if (IS.CheckIfUsing("Key"))
+        else if (IS.CheckIfUsing(OpenedBy))
         {
             open = true;
             Debug.Log("Door Opened");
-            Anim.SetTrigger("Open");
-            MapManagement.FirstDoorOpen = true;
+            Anim.SetTrigger("Open");           
             transform.position += transform.right * 2;
-            IS.RemoveFromInventory("Key");
+            IS.RemoveFromInventory(OpenedBy);
+            if(OpenedBy == "Key")
+            {
+                MapManagement.FirstDoorOpen = true;
+            }   
+            else if(OpenedBy == "CrowHammer")
+            {
+                MapManagement.SecondDoorOpen = true;
+            }
         }
     }
 }
