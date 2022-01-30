@@ -6,6 +6,7 @@ public class Openable : Intractable
 {
     bool open;
     Animator Anim;
+    AudioManager audio;
    // public GameObject[] Contant;
 
     // Start is called before the first frame update
@@ -13,6 +14,7 @@ public class Openable : Intractable
     {
         Anim = GetComponent<Animator>();
         ShowContact(false);
+        audio = GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -24,9 +26,11 @@ public class Openable : Intractable
     public override void Use()
     {
         open = !open;
+        audio.PlaySound(Sound.Activation.Custom, "Open");
         if (open)
         {          
             Debug.Log("Cabinet Opened");
+            
             ShowContact(true);
         }
         else

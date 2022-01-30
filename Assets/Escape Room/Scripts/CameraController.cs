@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     public static CurrentLocation currentLocation;
     Camera TheCamera;
     public GameObject[] buttons = new GameObject[3];
+    AudioManager audio;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +16,7 @@ public class CameraController : MonoBehaviour
         MapManagement.Buttons = buttons;
         currentLocation = new CurrentLocation(new StartPosition());
         currentLocation.CheckButtons();
+        audio = GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -40,14 +42,17 @@ public class CameraController : MonoBehaviour
     public void PressRight()
     {
         currentLocation.PressedRight();
+        audio.PlaySound(Sound.Activation.Custom, "Move");
     }
     public void PressLeft()
     {
         currentLocation.PressedLeft();
+        audio.PlaySound(Sound.Activation.Custom, "Move");
     }
     public void PressForward()
     {
         currentLocation.PressedForward();
+        audio.PlaySound(Sound.Activation.Custom, "Move");
     }
 }
 

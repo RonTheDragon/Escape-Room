@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Diamond : Intractable
 {
+    public GameObject youWin;
     public override void Use()
     {
-        Debug.Log("You Win!");
+        youWin.SetActive(true);
     }
 
     // Start is called before the first frame update

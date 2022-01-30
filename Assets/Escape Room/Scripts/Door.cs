@@ -8,11 +8,13 @@ public class Door : Intractable
     bool open;
     Animator Anim;
     public string OpenedBy;
+    AudioManager audio;
     // Start is called before the first frame update
     void Start()
     {
         IS = Camera.main.gameObject.GetComponent<InventorySystem>();
         Anim = GetComponent<Animator>();
+        audio = GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -30,6 +32,7 @@ public class Door : Intractable
         else if (IS.CheckIfUsing(OpenedBy))
         {
             open = true;
+            audio.PlaySound(Sound.Activation.Custom, "Door");
             Debug.Log("Door Opened");
             Anim.SetTrigger("Open");           
             transform.position += transform.right * 2;
@@ -37,6 +40,7 @@ public class Door : Intractable
             if(OpenedBy == "Key")
             {
                 MapManagement.FirstDoorOpen = true;
+
             }   
             else if(OpenedBy == "CrowHammer")
             {

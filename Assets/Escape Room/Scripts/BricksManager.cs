@@ -9,6 +9,7 @@ public class BricksManager : MonoBehaviour
     bool Open;
     int slot;
     public Animator anim;
+    AudioManager audio;
     public void BrickPressed(char Num)
     {
         if(Num == 'G')
@@ -29,6 +30,7 @@ public class BricksManager : MonoBehaviour
         {
             Open = true;
             anim.SetBool("Open", true);
+            audio.PlaySound(Sound.Activation.Custom, "Door");
             MapManagement.ThirdDoorOpen = true;
         }
         else WrongCode();
@@ -49,7 +51,7 @@ public class BricksManager : MonoBehaviour
     }
     void Start()
     {
-        
+        audio = anim.GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
